@@ -6,15 +6,47 @@ import { Providers } from './providers'
 const inter = Inter({ subsets: ['latin', 'cyrillic'] })
 
 export const metadata: Metadata = {
-  title: 'Бесплатный план тренировок | Darmowy plan treningowy | Trener personalny Warszawa',
-  description: 'Получи БЕСПЛАТНЫЙ план тренировок от AI! Darmowy plan treningowy online. Персональный тренер в Варшаве (сертификат GSA). Trener personalny dla rosyjskojęzycznych. Первая тренировка бесплатно!',
-  keywords: 'бесплатный план тренировок, darmowy plan treningowy, darmowy plan ćwiczeń, free workout plan, бесплатная программа тренировок, план тренировок бесплатно, trener personalny Warszawa, персональный тренер Варшава, darmowy trening, bezpłatny plan treningowy, план тренировок онлайн бесплатно, trener fitness za darmo konsultacja',
+  title: 'Персональный тренер в Варшаве | Trener personalny Warszawa | FitCoach',
+  description: 'Персональный тренер в Варшаве для русскоязычных. Сертификат GSA. Индивидуальные тренировки, бесплатный AI план. Trener personalny Warszawa dla rosyjskojęzycznych.',
+  keywords: 'персональный тренер Варшава, trener personalny Warszawa, фитнес тренер Варшава, персональные тренировки Варшава, trener personalny dla rosyjskojęzycznych, русскоязычный тренер Варшава, индивидуальные тренировки Warszawa, personal trainer Warsaw, GSA certified trainer',
+  authors: [{ name: 'FitCoach' }],
+  creator: 'FitCoach',
+  publisher: 'FitCoach',
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+    },
+  },
   openGraph: {
-    title: 'Бесплатный план тренировок | Darmowy plan treningowy',
-    description: 'Получи бесплатный персональный план тренировок от AI за 30 секунд! Darmowy plan treningowy online.',
+    title: 'Персональный тренер в Варшаве | FitCoach',
+    description: 'Сертифицированный персональный тренер для русскоязычных в Варшаве. 15+ лет опыта. Индивидуальный подход. Первая консультация бесплатно!',
     locale: 'ru_RU',
     alternateLocale: 'pl_PL',
     type: 'website',
+    siteName: 'FitCoach',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Персональный тренер в Варшаве | FitCoach',
+    description: 'Сертифицированный персональный тренер для русскоязычных в Варшаве. Индивидуальные тренировки.',
+  },
+  verification: {
+    google: 'добавь-свой-код-верификации',
+  },
+  alternates: {
+    languages: {
+      'ru': '/',
+      'pl': '/',
+    },
+  },
+  other: {
+    'geo.region': 'PL-MZ',
+    'geo.placename': 'Warszawa',
+    'geo.position': '52.2297;21.0122',
+    'ICBM': '52.2297, 21.0122',
   },
 }
 
