@@ -77,28 +77,38 @@ export default function About() {
                 <div key={index} className="bg-primary/50 rounded-lg p-3">
                   {index === 2 ? (
                     <>
-                      <a
-                        href="https://www.maratonypolskie.pl/wyniki/2025/83419_35_21_km.pdf"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        title={lang === 'ru' ? 'Ищи меня на 13 месте' : 'Szukaj mnie na 13 miejscu'}
-                        className="text-blue-400 text-sm font-medium hover:text-blue-300 transition-colors"
-                      >
-                        {item.text[lang]}
-                      </a>
+                      <div className="relative group/tooltip">
+                        <a
+                          href="https://www.maratonypolskie.pl/wyniki/2025/83419_35_21_km.pdf"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-blue-400 text-sm font-medium hover:text-blue-300 transition-colors"
+                        >
+                          {item.text[lang]}
+                        </a>
+                        <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-1.5 bg-gray-900 text-white text-xs rounded-lg opacity-0 group-hover/tooltip:opacity-100 transition-opacity whitespace-nowrap pointer-events-none z-10">
+                          {lang === 'ru' ? 'Ищи меня на 13 месте' : 'Szukaj mnie na 13 miejscu'}
+                          <div className="absolute top-full left-1/2 -translate-x-1/2 border-4 border-transparent border-t-gray-900"></div>
+                        </div>
+                      </div>
                       <div className="text-gray-400 text-xs">{item.detail[lang]}</div>
                     </>
                   ) : index === 3 ? (
                     <>
-                      <a
-                        href="https://www.gsacademy.pl/kurs-na-trenera-personalnego/"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        title={lang === 'ru' ? 'Ищи раздел "Akredytacja Polskiego Związku..."' : 'Szukaj sekcji "Akredytacja Polskiego Związku..."'}
-                        className="text-blue-400 text-sm font-medium hover:text-blue-300 transition-colors"
-                      >
-                        {item.text[lang]}
-                      </a>
+                      <div className="relative group/tooltip">
+                        <a
+                          href="https://www.gsacademy.pl/kurs-na-trenera-personalnego/"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-blue-400 text-sm font-medium hover:text-blue-300 transition-colors"
+                        >
+                          {item.text[lang]}
+                        </a>
+                        <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-1.5 bg-gray-900 text-white text-xs rounded-lg opacity-0 group-hover/tooltip:opacity-100 transition-opacity whitespace-nowrap pointer-events-none z-10">
+                          {lang === 'ru' ? 'Ищи: Akredytacja Polskiego Związku...' : 'Szukaj: Akredytacja Polskiego Związku...'}
+                          <div className="absolute top-full left-1/2 -translate-x-1/2 border-4 border-transparent border-t-gray-900"></div>
+                        </div>
+                      </div>
                       <div className="text-gray-400 text-xs">{item.detail[lang]}</div>
                     </>
                   ) : (
