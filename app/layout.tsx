@@ -34,7 +34,7 @@ export const metadata: Metadata = {
     description: 'Сертифицированный персональный тренер для русскоязычных в Варшаве. Индивидуальные тренировки.',
   },
   verification: {
-    google: 'добавь-свой-код-верификации',
+    google: '1b_TvUPqnCv0gGH8o5bMVVJiFmvmI1PQwp6UERyhmHE',
   },
   alternates: {
     languages: {
