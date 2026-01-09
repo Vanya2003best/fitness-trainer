@@ -94,6 +94,7 @@ export default function About() {
                         href="https://www.gsacademy.pl/kurs-na-trenera-personalnego/"
                         target="_blank"
                         rel="noopener noreferrer"
+                        title={lang === 'ru' ? 'Ищи раздел "Akredytacja Polskiego Związku..."' : 'Szukaj sekcji "Akredytacja Polskiego Związku..."'}
                         className="text-blue-400 text-sm font-medium hover:text-blue-300 transition-colors"
                       >
                         {item.text[lang]}
