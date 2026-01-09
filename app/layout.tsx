@@ -13,7 +13,7 @@ export const viewport: Viewport = {
 
 export const metadata: Metadata = {
   title: 'Персональный тренер в Варшаве | Trener personalny Warszawa | FitCoach',
-  description: 'Персональный тренер в Варшаве для русскоязычных. Сертификат GSA. Индивидуальные тренировки, бесплатный AI план. Trener personalny Warszawa dla rosyjskojęzycznych.',
+  description: 'Персональный тренер в Варшаве. Говорю по-русски. Пробная тренировка БЕСПЛАТНО! Сертификат GSA, 15+ лет опыта. От 80 PLN/час. Запишись сейчас!',
   keywords: 'персональный тренер Варшава, trener personalny Warszawa, фитнес тренер Варшава, персональные тренировки Варшава, trener personalny dla rosyjskojęzycznych, русскоязычный тренер Варшава, индивидуальные тренировки Warszawa, personal trainer Warsaw, GSA certified trainer',
   authors: [{ name: 'FitCoach' }],
   creator: 'FitCoach',
