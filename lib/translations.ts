@@ -76,7 +76,7 @@ export const translations = {
     experienceItems: [
       { text: { ru: 'Единоборства (борьба, бокс)', pl: 'Sztuki walki (zapasy, boks)' }, detail: { ru: 'призовые места', pl: 'miejsca medalowe' } },
       { text: { ru: 'Лыжи - 1 взрослый разряд', pl: 'Narciarstwo - 1 klasa' }, detail: { ru: 'коньковый стиль', pl: 'styl łyżwowy' } },
-      { text: { ru: 'Полумарафон 21 км', pl: 'Półmaraton 21 km' }, detail: { ru: '13 место', pl: '13 miejsce' } },
+      { text: { ru: 'Полумарафон 21 км', pl: 'Półmaraton 21 km' }, detail: { ru: '01:34:43', pl: '01:34:43' } },
       { text: { ru: 'Сертификат GSA', pl: 'Certyfikat GSA' }, detail: { ru: 'Польша', pl: 'Polska' } },
     ]
   },

@@ -81,6 +81,7 @@ export default function About() {
                         href="https://www.maratonypolskie.pl/wyniki/2025/83419_35_21_km.pdf"
                         target="_blank"
                         rel="noopener noreferrer"
+                        title={lang === 'ru' ? 'Ищи меня на 13 месте' : 'Szukaj mnie na 13 miejscu'}
                         className="text-blue-400 text-sm font-medium hover:text-blue-300 transition-colors"
                       >
                         {item.text[lang]}
