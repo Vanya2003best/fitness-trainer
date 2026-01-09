@@ -6,10 +6,11 @@ import WorkoutGenerator from '@/components/WorkoutGenerator'
 import Contacts from '@/components/Contacts'
 import Footer from '@/components/Footer'
 import Navigation from '@/components/Navigation'
+import MobileNav from '@/components/MobileNav'
 
 export default function Home() {
   return (
-    <main className="min-h-screen">
+    <main className="min-h-screen pb-20 md:pb-0">
       <Navigation />
       <Hero />
       <Services />
@@ -18,6 +19,7 @@ export default function Home() {
       <WorkoutGenerator />
       <Contacts />
       <Footer />
+      <MobileNav />
 
       {/* Schema.org structured data for local business */}
       <script
