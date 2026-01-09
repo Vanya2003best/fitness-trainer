@@ -1,6 +1,0 @@
-# Robots.txt for FitCoach
-User-agent: *
-Allow: /
-
-# Sitemap
-Sitemap: https://fitness-trainer-beryl.vercel.app/sitemap.xml
