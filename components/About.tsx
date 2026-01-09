@@ -75,8 +75,24 @@ export default function About() {
             <div className="grid grid-cols-2 gap-3">
               {t.experienceItems.map((item, index) => (
                 <div key={index} className="bg-primary/50 rounded-lg p-3">
-                  <div className="text-white text-sm font-medium">{item.text[lang]}</div>
-                  <div className="text-gray-400 text-xs">{item.detail[lang]}</div>
+                  {index === 3 ? (
+                    <>
+                      <a
+                        href="https://www.gsacademy.pl/kurs-na-trenera-personalnego/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-blue-400 text-sm font-medium hover:text-blue-300 transition-colors"
+                      >
+                        {item.text[lang]}
+                      </a>
+                      <div className="text-gray-400 text-xs">{item.detail[lang]}</div>
+                    </>
+                  ) : (
+                    <>
+                      <div className="text-white text-sm font-medium">{item.text[lang]}</div>
+                      <div className="text-gray-400 text-xs">{item.detail[lang]}</div>
+                    </>
+                  )}
                 </div>
               ))}
             </div>
