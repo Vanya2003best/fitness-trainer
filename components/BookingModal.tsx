@@ -158,48 +158,51 @@ export default function BookingModal({ isOpen, onClose, selectedPackage }: Booki
                 />
               </div>
 
-              <div>
-                <label className="block text-sm font-medium mb-2">{t.paymentMethod[lang]}</label>
-                <div className="space-y-2">
-                  <div>
-                    <label className={`flex items-center gap-3 p-3 bg-primary border rounded-lg cursor-pointer transition-colors ${formData.paymentMethod === 'blik' ? 'border-accent' : 'border-gray-600 hover:border-accent'}`}>
+              {/* Hide payment method for free trial */}
+              {selectedPackage?.price !== 'Бесплатно' && selectedPackage?.price !== 'Bezpłatnie' && (
+                <div>
+                  <label className="block text-sm font-medium mb-2">{t.paymentMethod[lang]}</label>
+                  <div className="space-y-2">
+                    <div>
+                      <label className={`flex items-center gap-3 p-3 bg-primary border rounded-lg cursor-pointer transition-colors ${formData.paymentMethod === 'blik' ? 'border-accent' : 'border-gray-600 hover:border-accent'}`}>
+                        <input
+                          type="radio"
+                          name="payment"
+                          value="blik"
+                          checked={formData.paymentMethod === 'blik'}
+                          onChange={(e) => setFormData({ ...formData, paymentMethod: e.target.value })}
+                          className="w-4 h-4 text-accent"
+                        />
+                        <div>
+                          <div className="font-medium">{t.paymentBlik[lang]}</div>
+                          <div className="text-xs text-gray-400">{t.paymentBlikDesc[lang]}</div>
+                        </div>
+                      </label>
+                      {formData.paymentMethod === 'blik' && (
+                        <div className="mt-2 p-3 bg-accent/10 border border-accent/30 rounded-lg">
+                          <p className="text-sm text-gray-300 mb-1">{t.blikPhone[lang]}:</p>
+                          <p className="font-mono text-accent text-lg font-bold">+48 576 480 429</p>
+                        </div>
+                      )}
+                    </div>
+
+                    <label className="flex items-center gap-3 p-3 bg-primary border border-gray-600 rounded-lg cursor-pointer hover:border-accent transition-colors">
                       <input
                         type="radio"
                         name="payment"
-                        value="blik"
-                        checked={formData.paymentMethod === 'blik'}
+                        value="cash"
+                        checked={formData.paymentMethod === 'cash'}
                         onChange={(e) => setFormData({ ...formData, paymentMethod: e.target.value })}
                         className="w-4 h-4 text-accent"
                       />
                       <div>
-                        <div className="font-medium">{t.paymentBlik[lang]}</div>
-                        <div className="text-xs text-gray-400">{t.paymentBlikDesc[lang]}</div>
+                        <div className="font-medium">{t.paymentCash[lang]}</div>
+                        <div className="text-xs text-gray-400">{t.paymentCashDesc[lang]}</div>
                       </div>
                     </label>
-                    {formData.paymentMethod === 'blik' && (
-                      <div className="mt-2 p-3 bg-accent/10 border border-accent/30 rounded-lg">
-                        <p className="text-sm text-gray-300 mb-1">{t.blikPhone[lang]}:</p>
-                        <p className="font-mono text-accent text-lg font-bold">+48 576 480 429</p>
-                      </div>
-                    )}
                   </div>
-
-                  <label className="flex items-center gap-3 p-3 bg-primary border border-gray-600 rounded-lg cursor-pointer hover:border-accent transition-colors">
-                    <input
-                      type="radio"
-                      name="payment"
-                      value="cash"
-                      checked={formData.paymentMethod === 'cash'}
-                      onChange={(e) => setFormData({ ...formData, paymentMethod: e.target.value })}
-                      className="w-4 h-4 text-accent"
-                    />
-                    <div>
-                      <div className="font-medium">{t.paymentCash[lang]}</div>
-                      <div className="text-xs text-gray-400">{t.paymentCashDesc[lang]}</div>
-                    </div>
-                  </label>
                 </div>
-              </div>
+              )}
 
               <div>
                 <label className="block text-sm font-medium mb-1">{t.message[lang]}</label>
@@ -242,7 +245,7 @@ export default function BookingModal({ isOpen, onClose, selectedPackage }: Booki
             <h3 className="text-2xl font-bold mb-2">{t.successTitle[lang]}</h3>
             <p className="text-gray-400 mb-6">{t.successMessage[lang]}</p>
 
-            {formData.paymentMethod === 'blik' && (
+            {formData.paymentMethod === 'blik' && selectedPackage?.price !== 'Бесплатно' && selectedPackage?.price !== 'Bezpłatnie' && (
               <div className="bg-primary/50 rounded-xl p-4 mb-6 text-center">
                 <p className="text-sm text-gray-300 mb-2">{t.bankDetails[lang]}:</p>
                 <p className="font-mono text-accent text-lg font-bold">+48 576 480 429</p>
