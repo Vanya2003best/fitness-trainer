@@ -34,6 +34,11 @@ export default function Contacts() {
 
   const handleContactClick = (contact: ContactType, e: React.MouseEvent) => {
     e.preventDefault()
+    // Instagram doesn't support pre-filled messages, open directly
+    if (contact === 'instagram') {
+      window.open(contactLinks.instagram, '_blank')
+      return
+    }
     setSelectedContact(contact)
   }
 
