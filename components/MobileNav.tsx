@@ -1,9 +1,35 @@
 'use client'
 
+import { useState, useEffect, useRef } from 'react'
 import { useLanguage } from '@/lib/LanguageContext'
 
 export default function MobileNav() {
   const { lang } = useLanguage()
+  const [isVisible, setIsVisible] = useState(true)
+  const lastScrollY = useRef(0)
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY
+
+      // Show nav when scrolling up, hide when scrolling down
+      if (currentScrollY < lastScrollY.current - 10) {
+        setIsVisible(true)
+      } else if (currentScrollY > lastScrollY.current + 10) {
+        setIsVisible(false)
+      }
+
+      // Always show at the top of the page
+      if (currentScrollY < 100) {
+        setIsVisible(true)
+      }
+
+      lastScrollY.current = currentScrollY
+    }
+
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
 
   const navItems = [
     {
@@ -61,7 +87,11 @@ export default function MobileNav() {
   }
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 z-50 md:hidden bg-secondary/95 backdrop-blur-lg border-t border-gray-700">
+    <nav
+      className={`fixed bottom-0 left-0 right-0 z-50 md:hidden bg-secondary/95 backdrop-blur-lg border-t border-gray-700 transition-transform duration-300 ${
+        isVisible ? 'translate-y-0' : 'translate-y-full'
+      }`}
+    >
       <div className="flex justify-around items-center pt-2 px-1 pb-[max(4px,env(safe-area-inset-bottom))]">
         {navItems.map((item) => (
           <button
