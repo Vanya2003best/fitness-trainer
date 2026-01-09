@@ -35,7 +35,7 @@ const levelLabels: Record<string, Record<string, string>> = {
 
 export async function POST(request: Request) {
   try {
-    const { goal, level, days, limitations, lang = 'ru' } = await request.json()
+    const { goal, customGoal, level, days, limitations, lang = 'ru' } = await request.json()
 
     if (!goal || !level || !days) {
       return NextResponse.json(
@@ -45,7 +45,7 @@ export async function POST(request: Request) {
     }
 
     const langKey = lang === 'pl' ? 'pl' : 'ru'
-    const goalText = goalLabels[langKey]?.[goal] || goal
+    const goalText = goal === 'other' ? customGoal : (goalLabels[langKey]?.[goal] || goal)
     const levelText = levelLabels[langKey]?.[level] || level
 
     const prompt = lang === 'pl'

@@ -155,7 +155,9 @@ export const translations = {
       get_fit: { ru: 'Улучшить форму', pl: 'Poprawić formę' },
       strength: { ru: 'Стать сильнее', pl: 'Stać się silniejszym' },
       endurance: { ru: 'Выносливость', pl: 'Wytrzymałość' },
+      other: { ru: 'Другое', pl: 'Inne' },
     },
+    customGoalPlaceholder: { ru: 'Опиши свою цель...', pl: 'Opisz swój cel...' },
     level: { ru: 'Уровень подготовки', pl: 'Poziom zaawansowania' },
     levelPlaceholder: { ru: 'Выбери уровень', pl: 'Wybierz poziom' },
     levels: {

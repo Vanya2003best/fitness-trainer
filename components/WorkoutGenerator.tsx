@@ -6,6 +6,7 @@ import { translations } from '@/lib/translations'
 
 type FormData = {
   goal: string
+  customGoal: string
   level: string
   days: string
   limitations: string
@@ -43,6 +44,7 @@ export default function WorkoutGenerator() {
 
   const [formData, setFormData] = useState<FormData>({
     goal: '',
+    customGoal: '',
     level: '',
     days: '3',
     limitations: ''
@@ -59,6 +61,7 @@ export default function WorkoutGenerator() {
     { value: 'get_fit', label: t.goals.get_fit[lang] },
     { value: 'strength', label: t.goals.strength[lang] },
     { value: 'endurance', label: t.goals.endurance[lang] },
+    { value: 'other', label: t.goals.other[lang] },
   ]
 
   const levels = [
@@ -111,7 +114,8 @@ export default function WorkoutGenerator() {
   }
 
   const getDaysText = (num: number) => {
-    if (lang === 'pl') return `${num} dni`
+    if (lang === 'pl') return num === 1 ? `${num} dzień` : `${num} dni`
+    if (num === 1) return `${num} день`
     return num < 5 ? `${num} дня` : `${num} дней`
   }
 
@@ -132,7 +136,7 @@ export default function WorkoutGenerator() {
                 <label className="block text-sm font-medium mb-2">{t.goal[lang]} *</label>
                 <select
                   value={formData.goal}
-                  onChange={(e) => setFormData({ ...formData, goal: e.target.value })}
+                  onChange={(e) => setFormData({ ...formData, goal: e.target.value, customGoal: '' })}
                   required
                   className="w-full bg-primary border border-gray-600 rounded-lg px-4 py-3 focus:border-accent focus:outline-none transition-colors"
                 >
@@ -141,6 +145,16 @@ export default function WorkoutGenerator() {
                     <option key={goal.value} value={goal.value}>{goal.label}</option>
                   ))}
                 </select>
+                {formData.goal === 'other' && (
+                  <input
+                    type="text"
+                    value={formData.customGoal}
+                    onChange={(e) => setFormData({ ...formData, customGoal: e.target.value })}
+                    placeholder={t.customGoalPlaceholder[lang]}
+                    required
+                    className="w-full mt-2 bg-primary border border-gray-600 rounded-lg px-4 py-3 focus:border-accent focus:outline-none transition-colors"
+                  />
+                )}
               </div>
 
               <div>
@@ -165,7 +179,7 @@ export default function WorkoutGenerator() {
                   onChange={(e) => setFormData({ ...formData, days: e.target.value })}
                   className="w-full bg-primary border border-gray-600 rounded-lg px-4 py-3 focus:border-accent focus:outline-none transition-colors"
                 >
-                  {[2, 3, 4, 5, 6].map((num) => (
+                  {[1, 2, 3, 4, 5, 6].map((num) => (
                     <option key={num} value={num}>{getDaysText(num)}</option>
                   ))}
                 </select>
