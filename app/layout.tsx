@@ -1,16 +1,17 @@
-import type { Metadata } from 'next'
+import type { Metadata, Viewport } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
 import { Providers } from './providers'
 
 const inter = Inter({ subsets: ['latin', 'cyrillic'] })
 
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  viewportFit: 'cover',
+}
+
 export const metadata: Metadata = {
-  viewport: {
-    width: 'device-width',
-    initialScale: 1,
-    viewportFit: 'cover',
-  },
   title: 'Персональный тренер в Варшаве | Trener personalny Warszawa | FitCoach',
   description: 'Персональный тренер в Варшаве для русскоязычных. Сертификат GSA. Индивидуальные тренировки, бесплатный AI план. Trener personalny Warszawa dla rosyjskojęzycznych.',
   keywords: 'персональный тренер Варшава, trener personalny Warszawa, фитнес тренер Варшава, персональные тренировки Варшава, trener personalny dla rosyjskojęzycznych, русскоязычный тренер Варшава, индивидуальные тренировки Warszawa, personal trainer Warsaw, GSA certified trainer',
