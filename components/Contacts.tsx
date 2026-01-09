@@ -1,16 +1,68 @@
 'use client'
 
+import { useState } from 'react'
 import { useLanguage } from '@/lib/LanguageContext'
 import { translations } from '@/lib/translations'
+
+type ContactType = 'telegram' | 'whatsapp' | 'instagram' | null
 
 export default function Contacts() {
   const { lang } = useLanguage()
   const t = translations.contacts
+  const [selectedContact, setSelectedContact] = useState<ContactType>(null)
 
   const contactLinks = {
     telegram: 'https://t.me/Daanaat',
     whatsapp: 'https://wa.me/48576480429',
     instagram: 'https://instagram.com/panda.3012701',
+  }
+
+  const messageTemplates = {
+    ru: [
+      'Привет! Хочу записаться на пробную тренировку',
+      'Здравствуйте! Интересует персональные тренировки, расскажите подробнее',
+      'Привет! Сколько стоят тренировки?',
+      'Хочу получить консультацию по программе тренировок',
+    ],
+    pl: [
+      'Cześć! Chcę zapisać się na trening próbny',
+      'Dzień dobry! Interesują mnie treningi personalne, proszę o więcej informacji',
+      'Cześć! Ile kosztują treningi?',
+      'Chcę uzyskać konsultację dotyczącą programu treningowego',
+    ],
+  }
+
+  const handleContactClick = (contact: ContactType, e: React.MouseEvent) => {
+    e.preventDefault()
+    setSelectedContact(contact)
+  }
+
+  const handleMessageSelect = (message: string) => {
+    const encodedMessage = encodeURIComponent(message)
+    let url = ''
+
+    switch (selectedContact) {
+      case 'telegram':
+        url = `${contactLinks.telegram}?text=${encodedMessage}`
+        break
+      case 'whatsapp':
+        url = `${contactLinks.whatsapp}?text=${encodedMessage}`
+        break
+      case 'instagram':
+        // Instagram doesn't support pre-filled messages, just open profile
+        url = contactLinks.instagram
+        break
+    }
+
+    window.open(url, '_blank')
+    setSelectedContact(null)
+  }
+
+  const handleDirectOpen = () => {
+    if (selectedContact) {
+      window.open(contactLinks[selectedContact], '_blank')
+      setSelectedContact(null)
+    }
   }
 
   return (
@@ -25,10 +77,8 @@ export default function Contacts() {
 
         <div className="grid sm:grid-cols-3 gap-6 mb-12">
           {/* Telegram */}
-          <a
-            href={contactLinks.telegram}
-            target="_blank"
-            rel="noopener noreferrer"
+          <button
+            onClick={(e) => handleContactClick('telegram', e)}
             className="bg-[#0088cc] hover:bg-[#0077b5] text-white rounded-2xl p-6 transition-all duration-300 hover:transform hover:scale-105 flex flex-col items-center"
           >
             <svg className="w-12 h-12 mb-4" fill="currentColor" viewBox="0 0 24 24">
@@ -36,13 +86,11 @@ export default function Contacts() {
             </svg>
             <span className="font-semibold text-lg">Telegram</span>
             <span className="text-white/70 text-sm mt-1">{t.telegram[lang]}</span>
-          </a>
+          </button>
 
           {/* WhatsApp */}
-          <a
-            href={contactLinks.whatsapp}
-            target="_blank"
-            rel="noopener noreferrer"
+          <button
+            onClick={(e) => handleContactClick('whatsapp', e)}
             className="bg-[#25D366] hover:bg-[#20bd5a] text-white rounded-2xl p-6 transition-all duration-300 hover:transform hover:scale-105 flex flex-col items-center"
           >
             <svg className="w-12 h-12 mb-4" fill="currentColor" viewBox="0 0 24 24">
@@ -50,13 +98,11 @@ export default function Contacts() {
             </svg>
             <span className="font-semibold text-lg">WhatsApp</span>
             <span className="text-white/70 text-sm mt-1">{t.whatsapp[lang]}</span>
-          </a>
+          </button>
 
           {/* Instagram */}
-          <a
-            href={contactLinks.instagram}
-            target="_blank"
-            rel="noopener noreferrer"
+          <button
+            onClick={(e) => handleContactClick('instagram', e)}
             className="bg-gradient-to-br from-[#833AB4] via-[#FD1D1D] to-[#F77737] hover:opacity-90 text-white rounded-2xl p-6 transition-all duration-300 hover:transform hover:scale-105 flex flex-col items-center"
           >
             <svg className="w-12 h-12 mb-4" fill="currentColor" viewBox="0 0 24 24">
@@ -64,13 +110,57 @@ export default function Contacts() {
             </svg>
             <span className="font-semibold text-lg">Instagram</span>
             <span className="text-white/70 text-sm mt-1">{t.instagram[lang]}</span>
-          </a>
+          </button>
         </div>
 
         <p className="text-gray-500 text-sm">
           {t.free[lang]}
         </p>
       </div>
+
+      {/* Message Selection Modal */}
+      {selectedContact && (
+        <div
+          className="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+          onClick={() => setSelectedContact(null)}
+        >
+          <div
+            className="bg-secondary rounded-2xl p-6 max-w-md w-full border border-gray-700"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <h3 className="text-xl font-bold mb-4 text-center">
+              {lang === 'ru' ? 'Выберите сообщение' : 'Wybierz wiadomość'}
+            </h3>
+
+            <div className="space-y-3 mb-4">
+              {messageTemplates[lang].map((message, index) => (
+                <button
+                  key={index}
+                  onClick={() => handleMessageSelect(message)}
+                  className="w-full text-left p-4 bg-primary/50 hover:bg-primary rounded-xl border border-gray-600 hover:border-accent transition-colors text-sm"
+                >
+                  {message}
+                </button>
+              ))}
+            </div>
+
+            <div className="flex gap-3">
+              <button
+                onClick={handleDirectOpen}
+                className="flex-1 py-3 px-4 bg-gray-700 hover:bg-gray-600 rounded-xl text-sm transition-colors"
+              >
+                {lang === 'ru' ? 'Открыть без сообщения' : 'Otwórz bez wiadomości'}
+              </button>
+              <button
+                onClick={() => setSelectedContact(null)}
+                className="py-3 px-4 text-gray-400 hover:text-white transition-colors"
+              >
+                {lang === 'ru' ? 'Отмена' : 'Anuluj'}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </section>
   )
 }
