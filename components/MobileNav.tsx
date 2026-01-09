@@ -61,10 +61,8 @@ export default function MobileNav() {
   }
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 z-50 md:hidden">
-      {/* Background that extends to safe area */}
-      <div className="absolute inset-0 bg-secondary/95 backdrop-blur-lg border-t border-gray-700" style={{ bottom: '-100px' }} />
-      <div className="relative flex justify-around items-center pt-2 pb-1 px-1">
+    <nav className="fixed bottom-0 left-0 right-0 z-50 md:hidden bg-secondary/95 backdrop-blur-lg border-t border-gray-700">
+      <div className="flex justify-around items-center pt-2 px-1 pb-[max(4px,env(safe-area-inset-bottom))]">
         {navItems.map((item) => (
           <button
             key={item.id}
