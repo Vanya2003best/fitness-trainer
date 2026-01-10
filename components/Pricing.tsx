@@ -52,7 +52,7 @@ export default function Pricing() {
     },
     {
       name: t.packages.online.name[lang],
-      price: '125',
+      price: '250',
       period: lang === 'ru' ? 'zł/мес' : 'zł/mies',
       description: t.packages.online.description[lang],
       features: t.packages.online.features[lang],
