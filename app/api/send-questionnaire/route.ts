@@ -36,11 +36,14 @@ export async function POST(request: Request) {
       birthDateStr = `${data.birthDay}.${data.birthMonth}.${data.birthYear}`
     }
 
-    // Format message
-    const message = `
-📋 *НОВАЯ АНКЕТА КЛИЕНТА*
+    // Format message (using HTML for better compatibility)
+    const injuriesText = data.injuries?.length > 0
+      ? data.injuries.map((i: any) => `  - ${i.area || 'область'}: ${i.type || 'тип'} (${i.current === 'yes' ? 'актуально' : 'в прошлом'})`).join('\n')
+      : ''
 
-👤 *ОСНОВНЫЕ ДАННЫЕ*
+    const message = `📋 <b>НОВАЯ АНКЕТА КЛИЕНТА</b>
+
+👤 <b>ОСНОВНЫЕ ДАННЫЕ</b>
 • Имя: ${data.name || 'Не указано'}
 • Дата рождения: ${birthDateStr}
 • Возраст: ${age} лет
@@ -49,31 +52,31 @@ export async function POST(request: Request) {
 • BMI: ${bmi}
 • Характер работы: ${data.workType || 'Не указано'}
 
-🎯 *ЦЕЛИ*
+🎯 <b>ЦЕЛИ</b>
 • Цели: ${data.goals?.join(', ') || 'Не указаны'}
 • Описание: ${data.goalDescription || 'Нет'}
 • Срок: ${data.goalTimeframe || 'Не указан'}
 • Мотивация: ${data.motivation || 'Не указана'}
 
-🏥 *ЗДОРОВЬЕ*
+🏥 <b>ЗДОРОВЬЕ</b>
 • Заболевания: ${data.healthConditions?.join(', ') || 'Нет'}
 • Лекарства: ${data.takingMedications === 'yes' ? data.medications : 'Нет'}
 • Травмы: ${data.hasInjuries === 'yes' ? 'Да' : 'Нет'}
-${data.injuries?.length > 0 ? data.injuries.map((i: any) => `  - ${i.area}: ${i.type} (${i.current === 'yes' ? 'актуально' : 'в прошлом'})`).join('\n') : ''}
+${injuriesText}
 • Боли: ${data.painDescription || 'Нет'}
 • Разрешение врача: ${data.doctorApproval || 'Не указано'}
 
-🏋️ *ОПЫТ*
+🏋️ <b>ОПЫТ</b>
 • Уровень активности: ${data.activityLevel || 'Не указан'}
 • Стаж тренировок: ${data.trainingDuration || 'Не указан'}
 • Работал с тренером: ${data.workedWithTrainer || 'Нет'}
 • Виды активности: ${data.activities?.join(', ') || 'Нет'}
 
-💪 *ПРЕДПОЧТЕНИЯ*
+💪 <b>ПРЕДПОЧТЕНИЯ</b>
 • Виды тренировок: ${data.preferredTraining?.join(', ') || 'Не указаны'}
 • Чего избегать: ${data.avoidInTraining || 'Ничего'}
 
-🌙 *ОБРАЗ ЖИЗНИ*
+🌙 <b>ОБРАЗ ЖИЗНИ</b>
 • Сон: ${data.sleepHours || 'N/A'} ч, качество: ${data.sleepQuality || 'N/A'}
 • Стресс: ${data.stressLevel || 'Не указан'}
 • Приёмов пищи: ${data.mealsPerDay || 'N/A'}
@@ -83,17 +86,16 @@ ${data.injuries?.length > 0 ? data.injuries.map((i: any) => `  - ${i.area}: ${i.
 • Аллергии: ${data.allergies || 'Нет'}
 • Диета: ${data.specialDiet?.join(', ') || 'Нет'}
 
-📅 *ЛОГИСТИКА*
+📅 <b>ЛОГИСТИКА</b>
 • Раз в неделю: ${data.trainingFrequency || 'Не указано'}
 • Дни: ${data.preferredDays?.join(', ') || 'Любые'}
 • Время: ${data.preferredTimes?.join(', ') || 'Любое'}
 • Место: ${data.trainingLocation || 'Не указано'}
 ${data.trainingLocation === 'gym' ? `• Зал: ${data.gymName || 'Не указан'}` : ''}
 
-📝 *ДОПОЛНИТЕЛЬНО*
+📝 <b>ДОПОЛНИТЕЛЬНО</b>
 • Доп. информация: ${data.additionalInfo || 'Нет'}
-• Ожидания от тренера: ${data.trainerExpectations || 'Не указаны'}
-`
+• Ожидания от тренера: ${data.trainerExpectations || 'Не указаны'}`
 
     // Send to Telegram
     const telegramResponse = await fetch(
@@ -104,7 +106,7 @@ ${data.trainingLocation === 'gym' ? `• Зал: ${data.gymName || 'Не ука�
         body: JSON.stringify({
           chat_id: chatId,
           text: message,
-          parse_mode: 'Markdown'
+          parse_mode: 'HTML'
         })
       }
     )
