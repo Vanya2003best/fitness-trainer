@@ -1,5 +1,14 @@
 import { NextResponse } from 'next/server'
 
+// Escape HTML special characters to prevent Telegram parsing errors
+function escapeHtml(text: string | undefined | null): string {
+  if (!text) return ''
+  return String(text)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+}
+
 export async function POST(request: Request) {
   try {
     const data = await request.json()
@@ -38,13 +47,13 @@ export async function POST(request: Request) {
 
     // Format message (using HTML for better compatibility)
     const injuriesText = data.injuries?.length > 0
-      ? data.injuries.map((i: any) => `  - ${i.area || 'область'}: ${i.type || 'тип'} (${i.current === 'yes' ? 'актуально' : 'в прошлом'})`).join('\n')
+      ? data.injuries.map((i: any) => `  - ${escapeHtml(i.area) || 'область'}: ${escapeHtml(i.type) || 'тип'} (${i.current === 'yes' ? 'актуально' : 'в прошлом'})`).join('\n')
       : ''
 
     const message = `📋 <b>НОВАЯ АНКЕТА КЛИЕНТА</b>
 
 👤 <b>ОСНОВНЫЕ ДАННЫЕ</b>
-• Имя: ${data.name || 'Не указано'}
+• Имя: ${escapeHtml(data.name) || 'Не указано'}
 • Дата рождения: ${birthDateStr}
 • Возраст: ${age} лет
 • Рост: ${data.height || 'N/A'} см
@@ -54,16 +63,16 @@ export async function POST(request: Request) {
 
 🎯 <b>ЦЕЛИ</b>
 • Цели: ${data.goals?.join(', ') || 'Не указаны'}
-• Описание: ${data.goalDescription || 'Нет'}
+• Описание: ${escapeHtml(data.goalDescription) || 'Нет'}
 • Срок: ${data.goalTimeframe || 'Не указан'}
-• Мотивация: ${data.motivation || 'Не указана'}
+• Мотивация: ${escapeHtml(data.motivation) || 'Не указана'}
 
 🏥 <b>ЗДОРОВЬЕ</b>
 • Заболевания: ${data.healthConditions?.join(', ') || 'Нет'}
-• Лекарства: ${data.takingMedications === 'yes' ? data.medications : 'Нет'}
+• Лекарства: ${data.takingMedications === 'yes' ? escapeHtml(data.medications) : 'Нет'}
 • Травмы: ${data.hasInjuries === 'yes' ? 'Да' : 'Нет'}
 ${injuriesText}
-• Боли: ${data.painDescription || 'Нет'}
+• Боли: ${escapeHtml(data.painDescription) || 'Нет'}
 • Разрешение врача: ${data.doctorApproval || 'Не указано'}
 
 🏋️ <b>ОПЫТ</b>
@@ -74,7 +83,7 @@ ${injuriesText}
 
 💪 <b>ПРЕДПОЧТЕНИЯ</b>
 • Виды тренировок: ${data.preferredTraining?.join(', ') || 'Не указаны'}
-• Чего избегать: ${data.avoidInTraining || 'Ничего'}
+• Чего избегать: ${escapeHtml(data.avoidInTraining) || 'Ничего'}
 
 🌙 <b>ОБРАЗ ЖИЗНИ</b>
 • Сон: ${data.sleepHours || 'N/A'} ч, качество: ${data.sleepQuality || 'N/A'}
@@ -83,7 +92,7 @@ ${injuriesText}
 • Воды: ${data.waterIntake || 'N/A'}
 • Алкоголь: ${data.alcohol || 'Не указано'}
 • Курение: ${data.smoking || 'Не указано'}
-• Аллергии: ${data.allergies || 'Нет'}
+• Аллергии: ${escapeHtml(data.allergies) || 'Нет'}
 • Диета: ${data.specialDiet?.join(', ') || 'Нет'}
 
 📅 <b>ЛОГИСТИКА</b>
@@ -91,11 +100,11 @@ ${injuriesText}
 • Дни: ${data.preferredDays?.join(', ') || 'Любые'}
 • Время: ${data.preferredTimes?.join(', ') || 'Любое'}
 • Место: ${data.trainingLocation || 'Не указано'}
-${data.trainingLocation === 'gym' ? `• Зал: ${data.gymName || 'Не указан'}` : ''}
+${data.trainingLocation === 'gym' ? `• Зал: ${escapeHtml(data.gymName) || 'Не указан'}` : ''}
 
 📝 <b>ДОПОЛНИТЕЛЬНО</b>
-• Доп. информация: ${data.additionalInfo || 'Нет'}
-• Ожидания от тренера: ${data.trainerExpectations || 'Не указаны'}`
+• Доп. информация: ${escapeHtml(data.additionalInfo) || 'Нет'}
+• Ожидания от тренера: ${escapeHtml(data.trainerExpectations) || 'Не указаны'}`
 
     // Send to Telegram
     const telegramResponse = await fetch(
