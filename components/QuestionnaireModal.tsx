@@ -11,7 +11,9 @@ interface QuestionnaireModalProps {
 interface FormData {
   // Step 1: Basic data
   name: string
-  birthDate: string
+  birthDay: string
+  birthMonth: string
+  birthYear: string
   height: string
   weight: string
   workType: string
@@ -81,7 +83,9 @@ interface FormData {
 
 const initialFormData: FormData = {
   name: '',
-  birthDate: '',
+  birthDay: '',
+  birthMonth: '',
+  birthYear: '',
   height: '',
   weight: '',
   workType: '',
@@ -183,8 +187,12 @@ export default function QuestionnaireModal({ isOpen, onClose }: QuestionnaireMod
 
   // Calculate age
   const calculateAge = () => {
-    if (!formData.birthDate) return null
-    const birth = new Date(formData.birthDate)
+    if (!formData.birthYear || !formData.birthMonth || !formData.birthDay) return null
+    const birth = new Date(
+      parseInt(formData.birthYear),
+      parseInt(formData.birthMonth) - 1,
+      parseInt(formData.birthDay)
+    )
     const today = new Date()
     let age = today.getFullYear() - birth.getFullYear()
     const m = today.getMonth() - birth.getMonth()
@@ -349,13 +357,52 @@ export default function QuestionnaireModal({ isOpen, onClose }: QuestionnaireMod
                 <label className="block text-sm text-gray-400 mb-1">
                   {lang === 'ru' ? 'Дата рождения *' : 'Data urodzenia *'}
                 </label>
-                <input
-                  type="date"
-                  value={formData.birthDate}
-                  onChange={(e) => updateField('birthDate', e.target.value)}
-                  className="w-full bg-primary border border-gray-700 rounded-lg px-4 py-2 text-white focus:border-accent focus:outline-none"
-                />
-                {calculateAge() && (
+                <div className="grid grid-cols-3 gap-2">
+                  <select
+                    value={formData.birthDay}
+                    onChange={(e) => updateField('birthDay', e.target.value)}
+                    className="bg-primary border border-gray-700 rounded-lg px-3 py-2 text-white focus:border-accent focus:outline-none"
+                  >
+                    <option value="">{lang === 'ru' ? 'День' : 'Dzień'}</option>
+                    {Array.from({ length: 31 }, (_, i) => i + 1).map(day => (
+                      <option key={day} value={day}>{day}</option>
+                    ))}
+                  </select>
+                  <select
+                    value={formData.birthMonth}
+                    onChange={(e) => updateField('birthMonth', e.target.value)}
+                    className="bg-primary border border-gray-700 rounded-lg px-3 py-2 text-white focus:border-accent focus:outline-none"
+                  >
+                    <option value="">{lang === 'ru' ? 'Месяц' : 'Miesiąc'}</option>
+                    {[
+                      { value: '1', ru: 'Январь', pl: 'Styczeń' },
+                      { value: '2', ru: 'Февраль', pl: 'Luty' },
+                      { value: '3', ru: 'Март', pl: 'Marzec' },
+                      { value: '4', ru: 'Апрель', pl: 'Kwiecień' },
+                      { value: '5', ru: 'Май', pl: 'Maj' },
+                      { value: '6', ru: 'Июнь', pl: 'Czerwiec' },
+                      { value: '7', ru: 'Июль', pl: 'Lipiec' },
+                      { value: '8', ru: 'Август', pl: 'Sierpień' },
+                      { value: '9', ru: 'Сентябрь', pl: 'Wrzesień' },
+                      { value: '10', ru: 'Октябрь', pl: 'Październik' },
+                      { value: '11', ru: 'Ноябрь', pl: 'Listopad' },
+                      { value: '12', ru: 'Декабрь', pl: 'Grudzień' }
+                    ].map(month => (
+                      <option key={month.value} value={month.value}>{month[lang]}</option>
+                    ))}
+                  </select>
+                  <select
+                    value={formData.birthYear}
+                    onChange={(e) => updateField('birthYear', e.target.value)}
+                    className="bg-primary border border-gray-700 rounded-lg px-3 py-2 text-white focus:border-accent focus:outline-none"
+                  >
+                    <option value="">{lang === 'ru' ? 'Год' : 'Rok'}</option>
+                    {Array.from({ length: 80 }, (_, i) => new Date().getFullYear() - 10 - i).map(year => (
+                      <option key={year} value={year}>{year}</option>
+                    ))}
+                  </select>
+                </div>
+                {calculateAge() !== null && (
                   <p className="text-sm text-gray-400 mt-1">
                     {lang === 'ru' ? 'Возраст' : 'Wiek'}: {calculateAge()} {lang === 'ru' ? 'лет' : 'lat'}
                   </p>

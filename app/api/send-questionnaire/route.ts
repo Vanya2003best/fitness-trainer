@@ -19,10 +19,21 @@ export async function POST(request: Request) {
 
     // Calculate age
     let age = 'N/A'
-    if (data.birthDate) {
-      const birth = new Date(data.birthDate)
+    let birthDateStr = 'N/A'
+    if (data.birthYear && data.birthMonth && data.birthDay) {
+      const birth = new Date(
+        parseInt(data.birthYear),
+        parseInt(data.birthMonth) - 1,
+        parseInt(data.birthDay)
+      )
       const today = new Date()
-      age = String(today.getFullYear() - birth.getFullYear())
+      let calculatedAge = today.getFullYear() - birth.getFullYear()
+      const m = today.getMonth() - birth.getMonth()
+      if (m < 0 || (m === 0 && today.getDate() < birth.getDate())) {
+        calculatedAge--
+      }
+      age = String(calculatedAge)
+      birthDateStr = `${data.birthDay}.${data.birthMonth}.${data.birthYear}`
     }
 
     // Format message
@@ -31,6 +42,7 @@ export async function POST(request: Request) {
 
 👤 *ОСНОВНЫЕ ДАННЫЕ*
 • Имя: ${data.name || 'Не указано'}
+• Дата рождения: ${birthDateStr}
 • Возраст: ${age} лет
 • Рост: ${data.height || 'N/A'} см
 • Вес: ${data.weight || 'N/A'} кг
