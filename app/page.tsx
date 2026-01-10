@@ -2,6 +2,7 @@ import Hero from '@/components/Hero'
 import Services from '@/components/Services'
 import About from '@/components/About'
 import Pricing from '@/components/Pricing'
+import QuestionnaireSection from '@/components/QuestionnaireSection'
 import WorkoutGenerator from '@/components/WorkoutGenerator'
 import Contacts from '@/components/Contacts'
 import Footer from '@/components/Footer'
@@ -16,6 +17,7 @@ export default function Home() {
       <Services />
       <About />
       <Pricing />
+      <QuestionnaireSection />
       <WorkoutGenerator />
       <Contacts />
       <Footer />
