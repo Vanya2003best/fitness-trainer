@@ -8,6 +8,32 @@ interface QuestionnaireModalProps {
   onClose: () => void
 }
 
+// Translation maps for summary
+const goalTranslations: Record<string, { ru: string; pl: string }> = {
+  weight_loss: { ru: 'Снижение веса', pl: 'Redukcja masy ciała' },
+  muscle_gain: { ru: 'Набор мышечной массы', pl: 'Budowa masy mięśniowej' },
+  fitness: { ru: 'Улучшение формы', pl: 'Poprawa kondycji' },
+  strength: { ru: 'Увеличение силы', pl: 'Poprawa siły' },
+  body_shape: { ru: 'Улучшение фигуры', pl: 'Poprawa sylwetki' },
+  rehab: { ru: 'Реабилитация', pl: 'Rehabilitacja' },
+  health: { ru: 'Улучшение здоровья', pl: 'Poprawa zdrowia' },
+  competition: { ru: 'Подготовка к соревнованиям', pl: 'Przygotowanie do zawodów' },
+}
+
+const locationTranslations: Record<string, { ru: string; pl: string }> = {
+  gym: { ru: 'В зале', pl: 'Na siłowni' },
+  home: { ru: 'Дома', pl: 'W domu' },
+  online: { ru: 'Онлайн', pl: 'Online' },
+  outdoor: { ru: 'На улице', pl: 'Na zewnątrz' },
+}
+
+const timeframeTranslations: Record<string, { ru: string; pl: string }> = {
+  '1-3': { ru: '1-3 месяца', pl: '1-3 miesiące' },
+  '3-6': { ru: '3-6 месяцев', pl: '3-6 miesięcy' },
+  '6-12': { ru: '6-12 месяцев', pl: '6-12 miesięcy' },
+  '12+': { ru: 'Больше года', pl: 'Ponad rok' },
+}
+
 interface FormData {
   // Step 1: Basic data
   name: string
@@ -1341,14 +1367,14 @@ export default function QuestionnaireModal({ isOpen, onClose }: QuestionnaireMod
 
                 <div className="bg-primary/50 rounded-lg p-3">
                   <p className="text-accent font-medium mb-1">{lang === 'ru' ? 'Цели' : 'Cele'}</p>
-                  <p><span className="text-gray-400">{lang === 'ru' ? 'Цели:' : 'Cele:'}</span> {formData.goals.join(', ')}</p>
-                  <p><span className="text-gray-400">{lang === 'ru' ? 'Срок:' : 'Termin:'}</span> {formData.goalTimeframe}</p>
+                  <p><span className="text-gray-400">{lang === 'ru' ? 'Цели:' : 'Cele:'}</span> {formData.goals.map(g => goalTranslations[g]?.[lang] || g).join(', ')}</p>
+                  <p><span className="text-gray-400">{lang === 'ru' ? 'Срок:' : 'Termin:'}</span> {timeframeTranslations[formData.goalTimeframe]?.[lang] || formData.goalTimeframe}</p>
                 </div>
 
                 <div className="bg-primary/50 rounded-lg p-3">
                   <p className="text-accent font-medium mb-1">{lang === 'ru' ? 'Логистика' : 'Logistyka'}</p>
                   <p><span className="text-gray-400">{lang === 'ru' ? 'Тренировок в неделю:' : 'Treningów tygodniowo:'}</span> {formData.trainingFrequency}</p>
-                  <p><span className="text-gray-400">{lang === 'ru' ? 'Место:' : 'Miejsce:'}</span> {formData.trainingLocation}</p>
+                  <p><span className="text-gray-400">{lang === 'ru' ? 'Место:' : 'Miejsce:'}</span> {locationTranslations[formData.trainingLocation]?.[lang] || formData.trainingLocation}</p>
                 </div>
               </div>
 

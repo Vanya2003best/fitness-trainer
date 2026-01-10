@@ -114,7 +114,8 @@ ${data.trainingLocation === 'gym' ? `• Зал: ${data.gymName || 'Не ука�
     if (!telegramResponse.ok) {
       const error = await telegramResponse.text()
       console.error('Telegram API error:', error)
-      return NextResponse.json({ error: 'Failed to send message' }, { status: 500 })
+      console.error('Message length:', message.length)
+      return NextResponse.json({ error: 'Failed to send message', details: error }, { status: 500 })
     }
 
     return NextResponse.json({ success: true })

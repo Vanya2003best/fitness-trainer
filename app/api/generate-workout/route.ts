@@ -33,11 +33,41 @@ const levelLabels: Record<string, Record<string, string>> = {
   }
 }
 
+const locationLabels: Record<string, Record<string, string>> = {
+  ru: {
+    gym: 'тренажёрный зал',
+    home: 'дома',
+    outdoor: 'на улице',
+  },
+  pl: {
+    gym: 'siłownia',
+    home: 'w domu',
+    outdoor: 'na zewnątrz',
+  }
+}
+
+const equipmentLabels: Record<string, Record<string, string>> = {
+  ru: {
+    full_gym: 'полный зал (все тренажёры, штанги, гантели)',
+    basic_gym: 'базовый зал (штанга, гантели, турник)',
+    dumbbells: 'только гантели',
+    minimal: 'минимум (резинки, коврик)',
+    none: 'без оборудования (только вес тела)',
+  },
+  pl: {
+    full_gym: 'pełna siłownia (wszystkie maszyny, sztangi, hantle)',
+    basic_gym: 'podstawowa siłownia (sztanga, hantle, drążek)',
+    dumbbells: 'tylko hantle',
+    minimal: 'minimum (gumy, mata)',
+    none: 'bez sprzętu (tylko masa ciała)',
+  }
+}
+
 export async function POST(request: Request) {
   try {
-    const { goal, customGoal, level, days, limitations, lang = 'ru' } = await request.json()
+    const { goal, customGoal, level, days, location, equipment, limitations, lang = 'ru' } = await request.json()
 
-    if (!goal || !level || !days) {
+    if (!goal || !level || !days || !location || !equipment) {
       return NextResponse.json(
         { error: lang === 'pl' ? 'Wypełnij wszystkie wymagane pola' : 'Заполните все обязательные поля' },
         { status: 400 }
@@ -47,6 +77,8 @@ export async function POST(request: Request) {
     const langKey = lang === 'pl' ? 'pl' : 'ru'
     const goalText = goal === 'other' ? customGoal : (goalLabels[langKey]?.[goal] || goal)
     const levelText = levelLabels[langKey]?.[level] || level
+    const locationText = locationLabels[langKey]?.[location] || location
+    const equipmentText = equipmentLabels[langKey]?.[equipment] || equipment
 
     const prompt = lang === 'pl'
       ? `Jesteś doświadczonym trenerem personalnym. Stwórz plan treningowy w języku polskim.
@@ -55,9 +87,14 @@ Dane klienta:
 - Cel: ${goalText}
 - Poziom zaawansowania: ${levelText}
 - Dni w tygodniu: ${days}
+- Miejsce treningu: ${locationText}
+- Dostępny sprzęt: ${equipmentText}
 ${limitations ? `- Ograniczenia/kontuzje: ${limitations}` : ''}
 
-WAŻNE: Odpowiedź musi być TYLKO w formacie JSON bez markdown, bez \`\`\`json, tylko czysty JSON.
+WAŻNE:
+- Odpowiedź musi być TYLKO w formacie JSON bez markdown, bez \`\`\`json, tylko czysty JSON.
+- Ćwiczenia MUSZĄ być dostosowane do miejsca treningu (${locationText}) i dostępnego sprzętu (${equipmentText})!
+- Nie używaj ćwiczeń wymagających sprzętu, którego klient nie ma.
 
 Struktura odpowiedzi:
 {
@@ -83,16 +120,21 @@ Struktura odpowiedzi:
   "tips": ["Wskazówka 1 dot. odżywiania", "Wskazówka 2 dot. regeneracji"]
 }
 
-Stwórz ${days} dni treningowych. Ćwiczenia muszą odpowiadać poziomowi "${levelText}" i celowi "${goalText}".`
+Stwórz ${days} dni treningowych. Ćwiczenia muszą odpowiadać poziomowi "${levelText}", celowi "${goalText}", miejscu (${locationText}) i dostępnemu sprzętowi (${equipmentText}).`
       : `Ты - опытный персональный тренер. Создай план тренировок на русском языке.
 
 Данные клиента:
 - Цель: ${goalText}
 - Уровень подготовки: ${levelText}
 - Дней в неделю: ${days}
+- Место тренировки: ${locationText}
+- Доступное оборудование: ${equipmentText}
 ${limitations ? `- Ограничения/травмы: ${limitations}` : ''}
 
-ВАЖНО: Ответ должен быть ТОЛЬКО в формате JSON без markdown, без \`\`\`json, просто чистый JSON.
+ВАЖНО:
+- Ответ должен быть ТОЛЬКО в формате JSON без markdown, без \`\`\`json, просто чистый JSON.
+- Упражнения ДОЛЖНЫ быть адаптированы под место тренировки (${locationText}) и доступное оборудование (${equipmentText})!
+- Не используй упражнения, требующие оборудования, которого у клиента нет.
 
 Структура ответа:
 {
@@ -118,7 +160,7 @@ ${limitations ? `- Ограничения/травмы: ${limitations}` : ''}
   "tips": ["Совет 1 по питанию", "Совет 2 по восстановлению"]
 }
 
-Создай ${days} тренировочных дней. Упражнения должны соответствовать уровню "${levelText}" и цели "${goalText}".`
+Создай ${days} тренировочных дней. Упражнения должны соответствовать уровню "${levelText}", цели "${goalText}", месту (${locationText}) и доступному оборудованию (${equipmentText}).`
 
     const model = genAI.getGenerativeModel({ model: 'gemini-2.0-flash' })
 

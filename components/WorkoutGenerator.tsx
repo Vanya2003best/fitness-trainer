@@ -9,6 +9,8 @@ type FormData = {
   customGoal: string
   level: string
   days: string
+  location: string
+  equipment: string
   limitations: string
 }
 
@@ -47,6 +49,8 @@ export default function WorkoutGenerator() {
     customGoal: '',
     level: '',
     days: '3',
+    location: '',
+    equipment: '',
     limitations: ''
   })
   const [workout, setWorkout] = useState<WorkoutPlan | null>(null)
@@ -68,6 +72,20 @@ export default function WorkoutGenerator() {
     { value: 'beginner', label: t.levels.beginner[lang] },
     { value: 'intermediate', label: t.levels.intermediate[lang] },
     { value: 'advanced', label: t.levels.advanced[lang] },
+  ]
+
+  const locations = [
+    { value: 'gym', label: t.locations.gym[lang] },
+    { value: 'home', label: t.locations.home[lang] },
+    { value: 'outdoor', label: t.locations.outdoor[lang] },
+  ]
+
+  const equipmentOptions = [
+    { value: 'full_gym', label: t.equipmentOptions.full_gym[lang] },
+    { value: 'basic_gym', label: t.equipmentOptions.basic_gym[lang] },
+    { value: 'dumbbells', label: t.equipmentOptions.dumbbells[lang] },
+    { value: 'minimal', label: t.equipmentOptions.minimal[lang] },
+    { value: 'none', label: t.equipmentOptions.none[lang] },
   ]
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -186,6 +204,36 @@ export default function WorkoutGenerator() {
               </div>
 
               <div>
+                <label className="block text-sm font-medium mb-2">{t.location[lang]} *</label>
+                <select
+                  value={formData.location}
+                  onChange={(e) => setFormData({ ...formData, location: e.target.value })}
+                  required
+                  className="w-full bg-primary border border-gray-600 rounded-lg px-4 py-3 focus:border-accent focus:outline-none transition-colors"
+                >
+                  <option value="">{t.locationPlaceholder[lang]}</option>
+                  {locations.map((loc) => (
+                    <option key={loc.value} value={loc.value}>{loc.label}</option>
+                  ))}
+                </select>
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium mb-2">{t.equipment[lang]} *</label>
+                <select
+                  value={formData.equipment}
+                  onChange={(e) => setFormData({ ...formData, equipment: e.target.value })}
+                  required
+                  className="w-full bg-primary border border-gray-600 rounded-lg px-4 py-3 focus:border-accent focus:outline-none transition-colors"
+                >
+                  <option value="">{t.equipmentPlaceholder[lang]}</option>
+                  {equipmentOptions.map((eq) => (
+                    <option key={eq.value} value={eq.value}>{eq.label}</option>
+                  ))}
+                </select>
+              </div>
+
+              <div className="md:col-span-2">
                 <label className="block text-sm font-medium mb-2">{t.limitations[lang]}</label>
                 <input
                   type="text"
