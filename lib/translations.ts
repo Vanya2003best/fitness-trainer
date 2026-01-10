@@ -107,11 +107,11 @@ export const translations = {
         cta: { ru: 'Записаться', pl: 'Umów się' }
       },
       package: {
-        name: { ru: 'Пакет 10 тренировок', pl: 'Pakiet 10 treningów' },
+        name: { ru: 'Пакет 12 тренировок', pl: 'Pakiet 12 treningów' },
         description: { ru: 'Выгодно для регулярных занятий', pl: 'Opłacalny dla regularnych ćwiczeń' },
         features: {
-          ru: ['10 персональных тренировок', 'Экономия 150 zł', 'Гибкий график', 'План питания в подарок'],
-          pl: ['10 treningów personalnych', 'Oszczędność 150 zł', 'Elastyczny grafik', 'Plan żywieniowy gratis']
+          ru: ['12 персональных тренировок', 'Экономия 180 zł', 'Гибкий график', 'План питания в подарок'],
+          pl: ['12 treningów personalnych', 'Oszczędność 180 zł', 'Elastyczny grafik', 'Plan żywieniowy gratis']
         },
         cta: { ru: 'Выбрать пакет', pl: 'Wybierz pakiet' }
       },

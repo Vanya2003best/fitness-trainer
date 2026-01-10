@@ -43,7 +43,7 @@ export default function Pricing() {
     },
     {
       name: t.packages.package.name[lang],
-      price: '600',
+      price: '720',
       period: 'zł',
       description: t.packages.package.description[lang],
       features: t.packages.package.features[lang],
