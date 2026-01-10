@@ -181,7 +181,7 @@ export default function BookingModal({ isOpen, onClose, selectedPackage }: Booki
                       {formData.paymentMethod === 'blik' && (
                         <div className="mt-2 p-3 bg-accent/10 border border-accent/30 rounded-lg">
                           <p className="text-sm text-gray-300 mb-1">{t.blikPhone[lang]}:</p>
-                          <p className="font-mono text-accent text-lg font-bold">+48 576 480 429</p>
+                          <p className="font-mono text-accent text-lg font-bold">+48 578 616 371</p>
                         </div>
                       )}
                     </div>
@@ -248,7 +248,7 @@ export default function BookingModal({ isOpen, onClose, selectedPackage }: Booki
             {formData.paymentMethod === 'blik' && selectedPackage?.price !== 'Бесплатно' && selectedPackage?.price !== 'Bezpłatnie' && (
               <div className="bg-primary/50 rounded-xl p-4 mb-6 text-center">
                 <p className="text-sm text-gray-300 mb-2">{t.bankDetails[lang]}:</p>
-                <p className="font-mono text-accent text-lg font-bold">+48 576 480 429</p>
+                <p className="font-mono text-accent text-lg font-bold">+48 578 616 371</p>
                 <p className="text-xs text-gray-500 mt-1">{t.blikPhone[lang]}</p>
               </div>
             )}
