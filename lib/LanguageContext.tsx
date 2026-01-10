@@ -12,7 +12,7 @@ type LanguageContextType = {
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined)
 
 export function LanguageProvider({ children }: { children: ReactNode }) {
-  const [lang, setLang] = useState<Language>('ru')
+  const [lang, setLang] = useState<Language>('pl')
 
   const toggleLang = () => {
     setLang(prev => prev === 'ru' ? 'pl' : 'ru')

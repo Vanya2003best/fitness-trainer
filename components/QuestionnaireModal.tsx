@@ -483,7 +483,7 @@ export default function QuestionnaireModal({ isOpen, onClose }: QuestionnaireMod
 
               <div>
                 <label className="block text-sm text-gray-400 mb-2">
-                  {lang === 'ru' ? 'Главная цель (макс. 2) *' : 'Główny cel (max 2) *'}
+                  {lang === 'ru' ? 'Цели тренировок *' : 'Cele treningowe *'}
                 </label>
                 {[
                   { value: 'weight_loss', ru: 'Снижение веса', pl: 'Redukcja masy ciała' },
@@ -499,11 +499,7 @@ export default function QuestionnaireModal({ isOpen, onClose }: QuestionnaireMod
                     <input
                       type="checkbox"
                       checked={formData.goals.includes(option.value)}
-                      onChange={() => {
-                        if (formData.goals.includes(option.value) || formData.goals.length < 2) {
-                          toggleArrayField('goals', option.value)
-                        }
-                      }}
+                      onChange={() => toggleArrayField('goals', option.value)}
                       className="text-accent focus:ring-accent rounded"
                     />
                     <span>{option[lang]}</span>
@@ -514,6 +510,7 @@ export default function QuestionnaireModal({ isOpen, onClose }: QuestionnaireMod
               <div>
                 <label className="block text-sm text-gray-400 mb-1">
                   {lang === 'ru' ? 'Опишите цель своими словами' : 'Opisz swój cel własnymi słowami'}
+                  <span className="text-gray-500 ml-2">({lang === 'ru' ? 'не обязательно' : 'opcjonalne'})</span>
                 </label>
                 <textarea
                   value={formData.goalDescription}
@@ -550,6 +547,7 @@ export default function QuestionnaireModal({ isOpen, onClose }: QuestionnaireMod
               <div>
                 <label className="block text-sm text-gray-400 mb-1">
                   {lang === 'ru' ? 'Что мотивирует вас тренироваться?' : 'Co najbardziej motywuje Cię do treningu?'}
+                  <span className="text-gray-500 ml-2">({lang === 'ru' ? 'не обязательно' : 'opcjonalne'})</span>
                 </label>
                 <textarea
                   value={formData.motivation}
@@ -755,6 +753,7 @@ export default function QuestionnaireModal({ isOpen, onClose }: QuestionnaireMod
               <div>
                 <label className="block text-sm text-gray-400 mb-1">
                   {lang === 'ru' ? 'Опишите текущие болевые ощущения (если есть)' : 'Opisz aktualne dolegliwości bólowe (jeśli występują)'}
+                  <span className="text-gray-500 ml-2">({lang === 'ru' ? 'не обязательно' : 'opcjonalne'})</span>
                 </label>
                 <textarea
                   value={formData.painDescription}
@@ -963,6 +962,7 @@ export default function QuestionnaireModal({ isOpen, onClose }: QuestionnaireMod
               <div>
                 <label className="block text-sm text-gray-400 mb-1">
                   {lang === 'ru' ? 'Чего хотите избегать в тренировках?' : 'Czego NIE lubisz lub chcesz unikać?'}
+                  <span className="text-gray-500 ml-2">({lang === 'ru' ? 'не обязательно' : 'opcjonalne'})</span>
                 </label>
                 <textarea
                   value={formData.avoidInTraining}
@@ -1132,6 +1132,7 @@ export default function QuestionnaireModal({ isOpen, onClose }: QuestionnaireMod
                 <div>
                   <label className="block text-xs text-gray-400 mb-1">
                     {lang === 'ru' ? 'Аллергии / непереносимости' : 'Alergie pokarmowe'}
+                    <span className="text-gray-500 ml-2">({lang === 'ru' ? 'не обязательно' : 'opcjonalne'})</span>
                   </label>
                   <input
                     type="text"
@@ -1253,6 +1254,7 @@ export default function QuestionnaireModal({ isOpen, onClose }: QuestionnaireMod
                 </label>
                 {[
                   { value: 'gym', ru: 'В зале', pl: 'Na siłowni' },
+                  { value: 'home', ru: 'Дома', pl: 'W domu' },
                   { value: 'online', ru: 'Онлайн', pl: 'Online' },
                   { value: 'outdoor', ru: 'На улице', pl: 'Na zewnątrz' }
                 ].map(option => (
@@ -1296,6 +1298,7 @@ export default function QuestionnaireModal({ isOpen, onClose }: QuestionnaireMod
               <div>
                 <label className="block text-sm text-gray-400 mb-1">
                   {lang === 'ru' ? 'Есть что-то ещё, что мне стоит знать?' : 'Czy jest coś jeszcze, o czym powinienem wiedzieć?'}
+                  <span className="text-gray-500 ml-2">({lang === 'ru' ? 'не обязательно' : 'opcjonalne'})</span>
                 </label>
                 <textarea
                   value={formData.additionalInfo}
@@ -1308,6 +1311,7 @@ export default function QuestionnaireModal({ isOpen, onClose }: QuestionnaireMod
               <div>
                 <label className="block text-sm text-gray-400 mb-1">
                   {lang === 'ru' ? 'Какие у вас ожидания от тренера?' : 'Jakie są Twoje oczekiwania wobec trenera?'}
+                  <span className="text-gray-500 ml-2">({lang === 'ru' ? 'не обязательно' : 'opcjonalne'})</span>
                 </label>
                 <textarea
                   value={formData.trainerExpectations}
@@ -1331,7 +1335,7 @@ export default function QuestionnaireModal({ isOpen, onClose }: QuestionnaireMod
                   <p className="text-accent font-medium mb-1">{lang === 'ru' ? 'Основные данные' : 'Dane podstawowe'}</p>
                   <p><span className="text-gray-400">{lang === 'ru' ? 'Имя:' : 'Imię:'}</span> {formData.name}</p>
                   <p><span className="text-gray-400">{lang === 'ru' ? 'Возраст:' : 'Wiek:'}</span> {calculateAge()} {lang === 'ru' ? 'лет' : 'lat'}</p>
-                  <p><span className="text-gray-400">{lang === 'ru' ? 'Рост/Вес:' : 'Wzrost/Waga:'}</span> {formData.height} см / {formData.weight} кг</p>
+                  <p><span className="text-gray-400">{lang === 'ru' ? 'Рост/Вес:' : 'Wzrost/Waga:'}</span> {formData.height} {lang === 'ru' ? 'см' : 'cm'} / {formData.weight} {lang === 'ru' ? 'кг' : 'kg'}</p>
                   {calculateBMI() && <p><span className="text-gray-400">BMI:</span> {calculateBMI()}</p>}
                 </div>
 
@@ -1361,7 +1365,10 @@ export default function QuestionnaireModal({ isOpen, onClose }: QuestionnaireMod
         <div className="p-4 border-t border-gray-700 flex justify-between">
           {step > 1 ? (
             <button
-              onClick={() => setStep(step - 1)}
+              onClick={() => {
+                setStep(step - 1)
+                document.querySelector('.overflow-y-auto')?.scrollTo({ top: 0, behavior: 'smooth' })
+              }}
               className="px-6 py-2 text-gray-400 hover:text-white transition-colors"
             >
               {t.back[lang]}
@@ -1372,7 +1379,10 @@ export default function QuestionnaireModal({ isOpen, onClose }: QuestionnaireMod
 
           {step < totalSteps ? (
             <button
-              onClick={() => setStep(step + 1)}
+              onClick={() => {
+                setStep(step + 1)
+                document.querySelector('.overflow-y-auto')?.scrollTo({ top: 0, behavior: 'smooth' })
+              }}
               className="bg-accent hover:bg-red-600 text-white px-6 py-2 rounded-full transition-colors"
             >
               {t.next[lang]}

@@ -17,6 +17,7 @@ export default function Navigation() {
           <a href="#services" className="hover:text-accent transition-colors">{t.services[lang]}</a>
           <a href="#about" className="hover:text-accent transition-colors">{t.about[lang]}</a>
           <a href="#pricing" className="hover:text-accent transition-colors">{t.pricing[lang]}</a>
+          <a href="#questionnaire" className="hover:text-accent transition-colors">{t.questionnaire[lang]}</a>
           <a href="#generator" className="hover:text-accent transition-colors">{t.plan[lang]}</a>
           <a href="#contacts" className="hover:text-accent transition-colors">{t.contacts[lang]}</a>
         </div>

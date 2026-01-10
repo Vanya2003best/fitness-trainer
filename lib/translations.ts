@@ -6,6 +6,7 @@ export const translations = {
     services: { ru: 'Услуги', pl: 'Usługi' },
     about: { ru: 'О тренере', pl: 'O trenerze' },
     pricing: { ru: 'Цены', pl: 'Cennik' },
+    questionnaire: { ru: 'Анкета', pl: 'Ankieta' },
     plan: { ru: 'План', pl: 'Plan' },
     contacts: { ru: 'Контакты', pl: 'Kontakt' },
     book: { ru: 'Записаться', pl: 'Umów się' },

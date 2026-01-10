@@ -69,7 +69,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="ru">
+    <html lang="pl">
       <body className={inter.className}>
         <Providers>{children}</Providers>
       </body>
