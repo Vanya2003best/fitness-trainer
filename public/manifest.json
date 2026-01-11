@@ -1,0 +1,16 @@
+{
+  "name": "FitCoach - Персональный тренер в Варшаве",
+  "short_name": "FitCoach",
+  "description": "Персональный тренер в Варшаве. Тренировки на русском и польском языках.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0a0a0a",
+  "theme_color": "#ef4444",
+  "icons": [
+    {
+      "src": "/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}

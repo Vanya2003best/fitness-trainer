@@ -61,6 +61,7 @@ export const metadata: Metadata = {
     'geo.position': '52.2297;21.0122',
     'ICBM': '52.2297, 21.0122',
   },
+  manifest: '/manifest.json',
 }
 
 export default function RootLayout({
