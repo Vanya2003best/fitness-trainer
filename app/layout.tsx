@@ -12,9 +12,14 @@ export const viewport: Viewport = {
 }
 
 export const metadata: Metadata = {
-  title: 'Тренер Варшава | Персональный тренер в Варшаве | Trener Warszawa | FitCoach',
+  metadataBase: new URL('https://fitness-trainer-beryl.vercel.app'),
+  title: {
+    default: 'FitCoach | Персональный тренер в Варшаве | Trener personalny Warszawa',
+    template: '%s | FitCoach',
+  },
   description: 'Тренер Варшава - цена от 80 PLN/час. Пробная тренировка БЕСПЛАТНО! Персональные тренировки на русском. Сертификат GSA, 15+ лет опыта.',
   keywords: 'тренер Варшава, тренер Варшава цена, trener Warszawa, trener Warszawa cena, персональный тренер Варшава, личный тренер Варшава, trener personalny Warszawa, фитнес тренер Варшава, персональные тренировки Варшава, сколько стоит тренер в Варшаве, русскоязычный тренер Варшава, индивидуальные тренировки Warszawa, personal trainer Warsaw, тренер в Варшаве, личный тренер в Варшаве',
+  applicationName: 'FitCoach',
   authors: [{ name: 'FitCoach' }],
   creator: 'FitCoach',
   publisher: 'FitCoach',
@@ -27,8 +32,9 @@ export const metadata: Metadata = {
     },
   },
   openGraph: {
-    title: 'Персональный тренер в Варшаве | FitCoach',
+    title: 'FitCoach | Персональный тренер в Варшаве',
     description: 'Сертифицированный персональный тренер для русскоязычных в Варшаве. 15+ лет опыта. Индивидуальный подход. Первая консультация бесплатно!',
+    url: 'https://fitness-trainer-beryl.vercel.app',
     locale: 'ru_RU',
     alternateLocale: 'pl_PL',
     type: 'website',
@@ -36,13 +42,14 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Персональный тренер в Варшаве | FitCoach',
+    title: 'FitCoach | Персональный тренер в Варшаве',
     description: 'Сертифицированный персональный тренер для русскоязычных в Варшаве. Индивидуальные тренировки.',
   },
   verification: {
     google: '1b_TvUPqnCv0gGH8o5bMVVJiFmvmI1PQwp6UERyhmHE',
   },
   alternates: {
+    canonical: '/',
     languages: {
       'ru': '/',
       'pl': '/',
@@ -53,13 +60,6 @@ export const metadata: Metadata = {
     'geo.placename': 'Warszawa',
     'geo.position': '52.2297;21.0122',
     'ICBM': '52.2297, 21.0122',
-  },
-  icons: {
-    icon: [
-      { url: '/icon.svg', type: 'image/svg+xml' },
-    ],
-    shortcut: '/icon.svg',
-    apple: '/icon.svg',
   },
 }
 
